@@ -80,14 +80,24 @@
 ### Iterated Wireframe
 ![Wireframe](assets/wireframes/low-fidelity/wireframe.png)
 
+*(Note: The above image combines all wireframe screens. To view the 8 individual low-fidelity wireframe screens, please check the [individual-wireframes](assets/wireframes/low-fidelity/individual-wireframes/) folder.)*
+
+#### Navigation Flow
+- **Login** → Home Dashboard  
+- **Home** (class card) → Campus Map  
+- **Home** (dining preview) → Dining Screen  
+- **Bison Feed** → Event Detail  
+- **Dining** → Full Menu Screen  
+- **Bottom Tab Navigation:** Home ↔ Map ↔ Feed ↔ Dining ↔ Profile
+
 ### Digital Wireframes
-![01 - Login](assets/wireframes/prototype/01-login.png)
-![02 - Home](assets/wireframes/prototype/02-home.png)
-![03 - Map](assets/wireframes/prototype/03-map.png)
-![04 - Feed](assets/wireframes/prototype/04-feed.png)
-![05 - Dining](assets/wireframes/prototype/05-dining.png)
-![05 - Dining Details](assets/wireframes/prototype/05-dining-details.png)
-![06 - Profile](assets/wireframes/prototype/06-profile.png)
+<img src="assets/wireframes/prototype/01-login.png" width="33%">
+<img src="assets/wireframes/prototype/02-home.png" width="33%">
+<img src="assets/wireframes/prototype/03-map.png" width="33%">
+<img src="assets/wireframes/prototype/04-feed.png" width="33%">
+<img src="assets/wireframes/prototype/05-dining.png" width="33%">
+<img src="assets/wireframes/prototype/05-dining-details.png" width="33%">
+<img src="assets/wireframes/prototype/06-profile.png" width="33%">
 
 ### Interactive Prototype Video
 ![Prototype GIF](assets/wireframes/prototype/prototype.gif)
