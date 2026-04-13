@@ -5,6 +5,7 @@
 2. [Product Spec](#Product-Spec)
 3. [Wireframes](#Wireframes)
 4. [Schema](#Schema)
+5. [Sprint Progress](#Sprint-Progress)
 
 ---
 
@@ -27,12 +28,12 @@
 ### 1. User Stories (Required and Optional)
 
 **Required Must-have Stories**
-* [ ] User can log in via Howard University credentials (SSO).
-* [ ] User can view their daily class schedule and room numbers.
-* [ ] User can view a campus map with real-time location tracking (GPS).
-* [ ] User can view daily dining menus and estimated wait times for Blackburn and Bethune Annex.
-* [ ] User can browse a feed of upcoming campus events and organization meetings.
-* [ ] User can access "Bison Safe" emergency buttons for campus security.
+* [x] User can log in via Howard University credentials (SSO).
+* [x] User can view their daily class schedule and room numbers.
+* [x] User can view a campus map with real-time location tracking (GPS).
+* [x] User can view daily dining menus and estimated wait times for Blackburn and Bethune Annex.
+* [x] User can browse a feed of upcoming campus events and organization meetings.
+* [x] User can access "Bison Safe" emergency buttons for campus security.
 
 **Optional Nice-to-have Stories**
 * [ ] User can "Check-in" to study spots to show friends where they are.
@@ -123,3 +124,59 @@
 * **Feed Screen**
     * (Read/GET) Fetch all upcoming events.
     * (Create/POST) Allow Student Orgs to post new events.
+
+---
+
+## Sprint Progress
+
+### 🏗️ Build Sprint 1 — Completed
+
+**Sprint Goal:** Implement core UI screens from wireframes with sample data and tab navigation.
+
+#### Completed User Stories
+- [x] **Login Screen** — Branded Howard University login with SSO button, gradient background, entrance animations, and email/password fields.
+- [x] **Home Dashboard** — Greeting with time-of-day, next class card with room/time, Bison Safe emergency button, dining wait-time preview, upcoming events section.
+- [x] **Campus Map** — Full MapKit integration with Howard University building pins, search bar, building detail bottom sheet, and "Get Directions" (opens Apple Maps).
+- [x] **Bison Feed** — Event cards with color banners, heart/save toggle, category filters (Today / This Week / Clubs / Sports), empty state handling.
+- [x] **Dining Screen** — Toggle between Blackburn and Bethune Annex, open/closed status badge, wait time display, busyness progress bar, menu preview with full menu sheet.
+- [x] **Profile Screen** — User info card with initials avatar, stats (Events/Classes/GPA), settings menu (Notifications, Saved Events, Schedule, Settings), logout with confirmation.
+- [x] **Tab Navigation** — 5-tab bar (Home, Map, Feed, Dining, Profile) with Howard Blue tint.
+- [x] **Bison Safe** — Emergency alert dialog with Call Campus Police and Share Location options.
+- [x] **Design System** — HU brand colors (Bison Blue #001F5F, Bison Red #C70D2E), consistent card styles, typography hierarchy.
+
+#### Build Progress Demo
+
+<img src="assets/wireframes/prototype/prototype.gif" width="250"/>
+
+#### Files Created
+
+```
+howardsync/howardsync/
+├── ContentView.swift           (Root view with login state management)
+├── howardsyncApp.swift         (App entry point)
+├── Theme.swift                 (HU brand design system)
+├── Models/
+│   ├── User.swift              (User data model)
+│   ├── ClassSchedule.swift     (Class schedule model)
+│   ├── CampusEvent.swift       (Event model with categories)
+│   ├── DiningHall.swift        (Dining hall + menu models)
+│   └── CampusBuilding.swift    (Building model with coordinates)
+└── Views/
+    ├── LoginView.swift         (Login screen with SSO)
+    ├── HomeView.swift          (Home dashboard)
+    ├── MapView.swift           (Campus map with MapKit)
+    ├── FeedView.swift          (Bison Feed event browser)
+    ├── DiningView.swift        (Dining halls + menus)
+    ├── ProfileView.swift       (Profile & settings)
+    └── MainTabView.swift       (Tab bar navigation)
+```
+
+#### Sprint 2 — Planned Issues
+- [ ] Integrate Firebase Authentication for real login
+- [ ] Connect to live dining API for real-time menus
+- [ ] Add event detail view with full information
+- [ ] Implement class schedule management (add/edit/delete)
+- [ ] Push notifications for events and dining
+- [ ] User profile editing (major, graduation year)
+- [ ] Persist saved/hearted events
+- [ ] Dark mode support
