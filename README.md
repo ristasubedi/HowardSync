@@ -146,7 +146,13 @@
 
 #### Build Progress Demo
 
+**[Insert Video Walkthrough of Sprint 1 Here]**
+*(Space below reserved for Sprint 1 Video Demo)*
+<br>
+<br>
+
 <img src="assets/wireframes/prototype/prototype.gif" width="250"/>
+
 
 #### Files Created
 
