@@ -146,7 +146,7 @@
 
 #### Build Progress Demo
 
-<video src="assets/wireframes/prototype/first_sprint_progress.mp4" width="250" controls></video>
+<img src="assets/wireframes/prototype/first_sprint.gif" width="250"/>
 
 
 #### Files Created
