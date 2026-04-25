@@ -7,6 +7,14 @@
 	objects = {
 
 /* Begin PBXFileReference section */
+/* Begin PBXBuildFile section */
+		3BC606182F9D4E3000666A34 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3BC606172F9D4E2F00666A34 /* GoogleService-Info.plist */; };
+		3BC6061B2F9D4FC000666A34 /* FirebaseCore in Frameworks */ = {isa = PBXBuildFile; productRef = 3BC6061A2F9D4FC000666A34 /* FirebaseCore */; };
+		3BC6061D2F9D4FEF00666A34 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 3BC6061C2F9D4FEF00666A34 /* FirebaseAuth */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		3BC606172F9D4E2F00666A34 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		E66E22F52F8C95FA006AD762 /* howardsync.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = howardsync.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -23,17 +31,28 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3BC6061B2F9D4FC000666A34 /* FirebaseCore in Frameworks */,
+				3BC6061D2F9D4FEF00666A34 /* FirebaseAuth in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3BC606192F9D4FC000666A34 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		E66E22EC2F8C95FA006AD762 = {
 			isa = PBXGroup;
 			children = (
 				E66E22F72F8C95FA006AD762 /* howardsync */,
 				E66E22F62F8C95FA006AD762 /* Products */,
+				3BC606172F9D4E2F00666A34 /* GoogleService-Info.plist */,
+				3BC606192F9D4FC000666A34 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -65,6 +84,8 @@
 			);
 			name = howardsync;
 			packageProductDependencies = (
+				3BC6061A2F9D4FC000666A34 /* FirebaseCore */,
+				3BC6061C2F9D4FEF00666A34 /* FirebaseAuth */,
 			);
 			productName = howardsync;
 			productReference = E66E22F52F8C95FA006AD762 /* howardsync.app */;
@@ -94,6 +115,9 @@
 			);
 			mainGroup = E66E22EC2F8C95FA006AD762;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				3BC606142F9D4C7300666A34 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = E66E22F62F8C95FA006AD762 /* Products */;
 			projectDirPath = "";
@@ -109,6 +133,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3BC606182F9D4E3000666A34 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -328,6 +353,30 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		3BC606142F9D4C7300666A34 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 12.12.1;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		3BC6061A2F9D4FC000666A34 /* FirebaseCore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 3BC606142F9D4C7300666A34 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseCore;
+		};
+		3BC6061C2F9D4FEF00666A34 /* FirebaseAuth */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 3BC606142F9D4C7300666A34 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAuth;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = E66E22ED2F8C95FA006AD762 /* Project object */;
 }

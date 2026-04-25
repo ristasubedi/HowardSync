@@ -15,7 +15,8 @@ class AppState {
     static let shared = AppState()
     
     // MARK: - Auth State
-    var isLoggedIn: Bool {
+    /// Driven by AuthService — do not set directly from outside AppState.
+    private(set) var isLoggedIn: Bool {
         didSet { UserDefaults.standard.set(isLoggedIn, forKey: "isLoggedIn") }
     }
     
@@ -129,12 +130,16 @@ class AppState {
     }
     
     // MARK: - Auth Actions
-    
-    func logout() {
-        isLoggedIn = false
+
+    /// Called by AuthService after a successful Firebase sign-in/sign-up.
+    func setLoggedIn(_ value: Bool) {
+        isLoggedIn = value
     }
-    
-    func login() {
-        isLoggedIn = true
+
+    /// Clears local session data after Firebase sign-out.
+    func clearSession() {
+        isLoggedIn = false
+        // Reset user back to default placeholder
+        currentUser = .sample
     }
 }

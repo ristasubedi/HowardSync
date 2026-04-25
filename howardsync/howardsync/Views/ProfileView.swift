@@ -205,7 +205,7 @@ struct ProfileView: View {
         .alert("Log Out", isPresented: $showLogoutConfirm) {
             Button("Log Out", role: .destructive) {
                 withAnimation(.spring(response: 0.3)) {
-                    appState.logout()
+                    try? AuthService.shared.signOut()
                 }
             }
             Button("Cancel", role: .cancel) {}

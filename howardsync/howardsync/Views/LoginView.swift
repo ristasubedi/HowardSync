@@ -153,7 +153,7 @@ struct LoginView: View {
                     // SSO button
                     Button {
                         withAnimation(.spring(response: 0.3)) {
-                            appState.login()
+                            $appState.login
                         }
                     } label: {
                         Text("Howard University SSO")
@@ -212,7 +212,7 @@ struct LoginView: View {
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.8) {
             isLoading = false
             withAnimation(.spring(response: 0.3)) {
-                appState.login()
+                $$appState.login
             }
         }
     }
