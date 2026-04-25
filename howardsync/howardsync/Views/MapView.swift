@@ -138,7 +138,8 @@ struct CampusMapView: View {
                     
                     Button {
                         // Open in Apple Maps
-                        let mapItem = MKMapItem(location: CLLocation(latitude: building.coordinate.latitude, longitude: building.coordinate.longitude), address: nil)
+                        let placemark = MKPlacemark(coordinate: building.coordinate)
+                        let mapItem = MKMapItem(placemark: placemark)
                         mapItem.name = building.name
                         mapItem.openInMaps(launchOptions: [MKLaunchOptionsDirectionsModeKey: MKLaunchOptionsDirectionsModeWalking])
                     } label: {

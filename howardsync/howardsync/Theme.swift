@@ -16,10 +16,16 @@ enum HUTheme {
     // Extended Palette
     static let darkNavy = Color(red: 0.0, green: 0.08, blue: 0.25)        // #001440
     static let lightBlue = Color(red: 0.92, green: 0.95, blue: 1.0)       // #EBF2FF
-    static let cardBackground = Color(red: 0.97, green: 0.97, blue: 0.98) // #F8F8FA
+    static let cardBackground = Color(UIColor.secondarySystemGroupedBackground)
     static let subtleGray = Color(red: 0.6, green: 0.6, blue: 0.65)
     static let safeGreen = Color(red: 0.15, green: 0.68, blue: 0.38)
     static let warningOrange = Color(red: 0.95, green: 0.55, blue: 0.15)
+    
+    // Adaptive Colors (Dark Mode compatible)
+    static let surfaceColor = Color(UIColor.systemBackground)
+    static let groupedBackground = Color(UIColor.systemGroupedBackground)
+    static let secondarySurface = Color(UIColor.secondarySystemBackground)
+    static let adaptiveCardBg = Color(UIColor.secondarySystemGroupedBackground)
     
     // Gradient for login/header
     static let bisonGradient = LinearGradient(
@@ -41,7 +47,7 @@ enum HUTheme {
 struct CardStyle: ViewModifier {
     func body(content: Content) -> some View {
         content
-            .background(Color.white)
+            .background(HUTheme.adaptiveCardBg)
             .clipShape(RoundedRectangle(cornerRadius: 16))
             .shadow(color: .black.opacity(0.06), radius: 8, x: 0, y: 2)
     }

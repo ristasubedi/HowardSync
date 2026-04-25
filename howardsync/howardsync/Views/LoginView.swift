@@ -8,11 +8,13 @@
 import SwiftUI
 
 struct LoginView: View {
-    @Binding var isLoggedIn: Bool
+    @State private var appState = AppState.shared
     @State private var email = ""
     @State private var password = ""
     @State private var isAnimating = false
     @State private var showError = false
+    @State private var errorMessage = ""
+    @State private var isLoading = false
     
     var body: some View {
         ZStack {
@@ -77,6 +79,7 @@ struct LoginView: View {
                             .foregroundColor(.white)
                             .autocapitalization(.none)
                             .keyboardType(.emailAddress)
+                            .textContentType(.emailAddress)
                     }
                     .padding()
                     .background(Color.white.opacity(0.12))
@@ -94,6 +97,7 @@ struct LoginView: View {
                         
                         SecureField("Password", text: $password)
                             .foregroundColor(.white)
+                            .textContentType(.password)
                     }
                     .padding()
                     .background(Color.white.opacity(0.12))
@@ -102,6 +106,18 @@ struct LoginView: View {
                         RoundedRectangle(cornerRadius: 14)
                             .stroke(Color.white.opacity(0.2), lineWidth: 1)
                     )
+                    
+                    // Error message
+                    if showError {
+                        HStack(spacing: 6) {
+                            Image(systemName: "exclamationmark.triangle.fill")
+                                .font(.system(size: 13))
+                            Text(errorMessage)
+                                .font(.system(size: 13, weight: .medium))
+                        }
+                        .foregroundColor(.yellow)
+                        .transition(.opacity.combined(with: .move(edge: .top)))
+                    }
                 }
                 .padding(.horizontal, 32)
                 .offset(y: isAnimating ? 0 : 30)
@@ -114,24 +130,30 @@ struct LoginView: View {
                 VStack(spacing: 14) {
                     // Sign In button
                     Button {
-                        withAnimation(.spring(response: 0.3)) {
-                            isLoggedIn = true
-                        }
+                        signIn()
                     } label: {
-                        Text("Sign In")
-                            .font(.system(size: 17, weight: .semibold))
-                            .foregroundColor(HUTheme.bisonBlue)
-                            .frame(maxWidth: .infinity)
-                            .padding(.vertical, 16)
-                            .background(Color.white)
-                            .clipShape(RoundedRectangle(cornerRadius: 14))
-                            .shadow(color: .black.opacity(0.1), radius: 8, x: 0, y: 4)
+                        HStack {
+                            if isLoading {
+                                ProgressView()
+                                    .progressViewStyle(CircularProgressViewStyle(tint: HUTheme.bisonBlue))
+                            } else {
+                                Text("Sign In")
+                                    .font(.system(size: 17, weight: .semibold))
+                                    .foregroundColor(HUTheme.bisonBlue)
+                            }
+                        }
+                        .frame(maxWidth: .infinity)
+                        .padding(.vertical, 16)
+                        .background(Color.white)
+                        .clipShape(RoundedRectangle(cornerRadius: 14))
+                        .shadow(color: .black.opacity(0.1), radius: 8, x: 0, y: 4)
                     }
+                    .disabled(isLoading)
                     
                     // SSO button
                     Button {
                         withAnimation(.spring(response: 0.3)) {
-                            isLoggedIn = true
+                            appState.login()
                         }
                     } label: {
                         Text("Howard University SSO")
@@ -142,6 +164,7 @@ struct LoginView: View {
                             .background(HUTheme.bisonRed)
                             .clipShape(RoundedRectangle(cornerRadius: 14))
                     }
+                    .disabled(isLoading)
                 }
                 .padding(.horizontal, 32)
                 .offset(y: isAnimating ? 0 : 30)
@@ -169,8 +192,32 @@ struct LoginView: View {
             }
         }
     }
+    
+    private func signIn() {
+        // Hide any previous error
+        withAnimation { showError = false }
+        
+        // Validate email
+        if !email.isEmpty && !email.contains("@") && !email.contains("howard") {
+            withAnimation {
+                errorMessage = "Please use your @bison.howard.edu email"
+                showError = true
+            }
+            return
+        }
+        
+        // Simulate login with loading
+        isLoading = true
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.8) {
+            isLoading = false
+            withAnimation(.spring(response: 0.3)) {
+                appState.login()
+            }
+        }
+    }
 }
 
 #Preview {
-    LoginView(isLoggedIn: .constant(false))
+    LoginView()
 }

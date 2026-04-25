@@ -8,22 +8,27 @@
 import SwiftUI
 
 struct ContentView: View {
-    @State private var isLoggedIn = false
+    @State private var appState = AppState.shared
     
     var body: some View {
         Group {
-            if isLoggedIn {
-                MainTabView(isLoggedIn: $isLoggedIn)
+            if appState.isLoggedIn {
+                MainTabView()
                     .transition(.asymmetric(
                         insertion: .move(edge: .trailing).combined(with: .opacity),
                         removal: .opacity
                     ))
             } else {
-                LoginView(isLoggedIn: $isLoggedIn)
+                LoginView()
                     .transition(.opacity)
             }
         }
-        .animation(.easeInOut(duration: 0.4), value: isLoggedIn)
+        .animation(.easeInOut(duration: 0.4), value: appState.isLoggedIn)
+        .preferredColorScheme(appState.isDarkMode ? .dark : nil)
+        .task {
+            // Request notification permission on first launch
+            _ = await NotificationService.shared.requestPermission()
+        }
     }
 }
 

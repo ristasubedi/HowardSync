@@ -7,16 +7,16 @@
 
 import Foundation
 
-struct ClassSchedule: Identifiable {
-    let id = UUID()
-    let courseName: String
-    let courseCode: String
-    let startTime: String
-    let endTime: String
-    let building: String
-    let roomNumber: String
-    let professorName: String
-    let dayOfWeek: [String]
+struct ClassSchedule: Identifiable, Codable, Hashable {
+    var id: String
+    var courseName: String
+    var courseCode: String
+    var startTime: String
+    var endTime: String
+    var building: String
+    var roomNumber: String
+    var professorName: String
+    var dayOfWeek: [String]
     
     var locationString: String {
         "\(building), Room \(roomNumber)"
@@ -26,8 +26,37 @@ struct ClassSchedule: Identifiable {
         "\(startTime) - \(endTime)"
     }
     
+    var daysString: String {
+        dayOfWeek.joined(separator: ", ")
+    }
+    
+    /// Create a new ClassSchedule with auto-generated ID
+    static func create(
+        courseName: String,
+        courseCode: String,
+        startTime: String,
+        endTime: String,
+        building: String,
+        roomNumber: String,
+        professorName: String,
+        dayOfWeek: [String]
+    ) -> ClassSchedule {
+        ClassSchedule(
+            id: UUID().uuidString,
+            courseName: courseName,
+            courseCode: courseCode,
+            startTime: startTime,
+            endTime: endTime,
+            building: building,
+            roomNumber: roomNumber,
+            professorName: professorName,
+            dayOfWeek: dayOfWeek
+        )
+    }
+    
     static let sampleSchedule: [ClassSchedule] = [
         ClassSchedule(
+            id: "class-001",
             courseName: "Data Structures",
             courseCode: "CSCI 201",
             startTime: "10:00 AM",
@@ -38,6 +67,7 @@ struct ClassSchedule: Identifiable {
             dayOfWeek: ["Mon", "Wed", "Fri"]
         ),
         ClassSchedule(
+            id: "class-002",
             courseName: "Calculus II",
             courseCode: "MATH 156",
             startTime: "12:00 PM",
@@ -48,6 +78,7 @@ struct ClassSchedule: Identifiable {
             dayOfWeek: ["Tue", "Thu"]
         ),
         ClassSchedule(
+            id: "class-003",
             courseName: "African American History",
             courseCode: "AFAM 101",
             startTime: "2:00 PM",
@@ -58,6 +89,7 @@ struct ClassSchedule: Identifiable {
             dayOfWeek: ["Mon", "Wed"]
         ),
         ClassSchedule(
+            id: "class-004",
             courseName: "Intro to Philosophy",
             courseCode: "PHIL 100",
             startTime: "4:00 PM",
@@ -68,6 +100,7 @@ struct ClassSchedule: Identifiable {
             dayOfWeek: ["Tue", "Thu"]
         ),
         ClassSchedule(
+            id: "class-005",
             courseName: "Technical Writing",
             courseCode: "ENGL 215",
             startTime: "9:00 AM",

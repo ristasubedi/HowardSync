@@ -8,19 +8,13 @@
 import SwiftUI
 
 struct MainTabView: View {
-    @Binding var isLoggedIn: Bool
     @State private var selectedTab = 0
-    
-    let user = User.sample
+    @State private var appState = AppState.shared
     
     var body: some View {
         TabView(selection: $selectedTab) {
             Tab(value: 0) {
-                HomeView(
-                    user: user,
-                    nextClass: ClassSchedule.sampleSchedule[0],
-                    events: CampusEvent.sampleEvents
-                )
+                HomeView()
             } label: {
                 Label("Home", systemImage: "house.fill")
             }
@@ -32,19 +26,21 @@ struct MainTabView: View {
             }
             
             Tab(value: 2) {
-                FeedView()
+                NavigationStack {
+                    FeedView()
+                }
             } label: {
                 Label("Feed", systemImage: "calendar")
             }
             
             Tab(value: 3) {
-                DiningView(diningHalls: DiningHall.sampleHalls)
+                DiningView()
             } label: {
                 Label("Dining", systemImage: "fork.knife")
             }
             
             Tab(value: 4) {
-                ProfileView(user: user, isLoggedIn: $isLoggedIn)
+                ProfileView()
             } label: {
                 Label("Profile", systemImage: "person.fill")
             }
@@ -54,5 +50,5 @@ struct MainTabView: View {
 }
 
 #Preview {
-    MainTabView(isLoggedIn: .constant(true))
+    MainTabView()
 }
