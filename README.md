@@ -231,6 +231,8 @@ howardsync/howardsync/
     <a href="YOUR_YOUTUBE_OR_VIMEO_LINK_HERE">
         <img src="assets/wireframes/prototype/first_sprint.gif" width="250" alt="Demo Video"/>
     </a>
+   <h2>Final Demo link:</h2>
+   <p>>https://www.loom.com/share/97dd0a5ed66545ae93dc9a95402d5a20</p>
 </div>
 
 <!-- Replace the link above with your actual YouTube/Vimeo URL -->
