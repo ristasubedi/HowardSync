@@ -10,6 +10,7 @@ import SwiftUI
 struct FeedView: View {
     @State private var events: [CampusEvent] = CampusEvent.sampleEvents
     @State private var selectedCategory: EventCategory = .today
+    @State private var appState = AppState.shared
     
     private var filteredEvents: [CampusEvent] {
         switch selectedCategory {
@@ -58,9 +59,12 @@ struct FeedView: View {
                 
                 // Event Cards
                 LazyVStack(spacing: 20) {
-                    ForEach(Array(filteredEvents.enumerated()), id: \.element.id) { index, event in
-                        EventCard(event: binding(for: event))
-                            .padding(.horizontal)
+                    ForEach(filteredEvents) { event in
+                        NavigationLink(destination: EventDetailView(event: event)) {
+                            EventCard(event: event, appState: appState)
+                        }
+                        .buttonStyle(.plain)
+                        .padding(.horizontal)
                     }
                 }
                 
@@ -85,14 +89,7 @@ struct FeedView: View {
                 Spacer(minLength: 100)
             }
         }
-        .background(Color(UIColor.systemGroupedBackground))
-    }
-    
-    private func binding(for event: CampusEvent) -> Binding<CampusEvent> {
-        guard let index = events.firstIndex(where: { $0.id == event.id }) else {
-            return .constant(event)
-        }
-        return $events[index]
+        .background(HUTheme.groupedBackground)
     }
 }
 
@@ -119,30 +116,60 @@ struct CategoryPill: View {
 // MARK: - Event Card
 
 struct EventCard: View {
-    @Binding var event: CampusEvent
+    let event: CampusEvent
+    var appState: AppState
+    @State private var heartScale: CGFloat = 1.0
+    
+    private var isSaved: Bool {
+        appState.isEventSaved(event.id)
+    }
     
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
             // Color banner
             ZStack(alignment: .bottomTrailing) {
                 Rectangle()
-                    .fill(event.color)
+                    .fill(
+                        LinearGradient(
+                            colors: [event.color, event.color.opacity(0.7)],
+                            startPoint: .topLeading,
+                            endPoint: .bottomTrailing
+                        )
+                    )
                     .frame(height: 140)
+                    .overlay(
+                        // Decorative circle
+                        Circle()
+                            .fill(Color.white.opacity(0.06))
+                            .frame(width: 100, height: 100)
+                            .offset(x: 60, y: -30)
+                        , alignment: .topTrailing
+                    )
                 
                 // Heart button
                 Button {
-                    withAnimation(.spring(response: 0.3)) {
-                        event.isSaved.toggle()
+                    withAnimation(.spring(response: 0.3, dampingFraction: 0.5)) {
+                        heartScale = 1.4
+                        appState.toggleSaveEvent(event.id)
                     }
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.15) {
+                        withAnimation(.spring(response: 0.3)) {
+                            heartScale = 1.0
+                        }
+                    }
+                    
+                    let impactFeedback = UIImpactFeedbackGenerator(style: .light)
+                    impactFeedback.impactOccurred()
                 } label: {
                     ZStack {
                         Circle()
                             .fill(Color.black.opacity(0.3))
                             .frame(width: 36, height: 36)
                         
-                        Image(systemName: event.isSaved ? "heart.fill" : "heart")
+                        Image(systemName: isSaved ? "heart.fill" : "heart")
                             .font(.system(size: 16))
-                            .foregroundColor(.white)
+                            .foregroundColor(isSaved ? HUTheme.bisonRed : .white)
+                            .scaleEffect(heartScale)
                     }
                 }
                 .padding(12)
@@ -152,6 +179,7 @@ struct EventCard: View {
             VStack(alignment: .leading, spacing: 8) {
                 Text(event.title)
                     .font(.system(size: 18, weight: .bold))
+                    .foregroundColor(.primary)
                 
                 HStack(spacing: 4) {
                     Image(systemName: "clock")
@@ -171,12 +199,14 @@ struct EventCard: View {
             }
             .padding(16)
         }
-        .background(Color.white)
+        .background(HUTheme.adaptiveCardBg)
         .clipShape(RoundedRectangle(cornerRadius: 18))
         .shadow(color: .black.opacity(0.06), radius: 8, x: 0, y: 2)
     }
 }
 
 #Preview {
-    FeedView()
+    NavigationStack {
+        FeedView()
+    }
 }

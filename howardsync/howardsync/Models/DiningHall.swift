@@ -13,6 +13,7 @@ struct DiningHall: Identifiable {
     let isOpen: Bool
     let waitTimeMinutes: Int
     let busynessLevel: Double // 0.0 to 1.0
+    let mealPeriod: String
     let menuItems: [MenuItem]
     
     var statusText: String {
@@ -20,7 +21,7 @@ struct DiningHall: Identifiable {
     }
     
     var waitTimeText: String {
-        "~\(waitTimeMinutes) minutes"
+        isOpen ? "~\(waitTimeMinutes) minutes" : "N/A"
     }
     
     static let sampleHalls: [DiningHall] = [
@@ -29,6 +30,7 @@ struct DiningHall: Identifiable {
             isOpen: true,
             waitTimeMinutes: 15,
             busynessLevel: 0.65,
+            mealPeriod: "Lunch",
             menuItems: [
                 MenuItem(name: "Grilled Chicken", category: .entree),
                 MenuItem(name: "Caesar Salad", category: .side),
@@ -45,6 +47,7 @@ struct DiningHall: Identifiable {
             isOpen: true,
             waitTimeMinutes: 8,
             busynessLevel: 0.35,
+            mealPeriod: "Lunch",
             menuItems: [
                 MenuItem(name: "Pasta Primavera", category: .entree),
                 MenuItem(name: "Garden Salad", category: .side),

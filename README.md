@@ -164,12 +164,74 @@ howardsync/howardsync/
     └── MainTabView.swift       (Tab bar navigation)
 ```
 
-#### Sprint 2 — Planned Issues
-- [ ] Integrate Firebase Authentication for real login
-- [ ] Connect to live dining API for real-time menus
-- [ ] Add event detail view with full information
-- [ ] Implement class schedule management (add/edit/delete)
-- [ ] Push notifications for events and dining
-- [ ] User profile editing (major, graduation year)
-- [ ] Persist saved/hearted events
-- [ ] Dark mode support
+---
+
+### 🚀 Build Sprint 2 — Completed
+
+**Sprint Goal:** Make all features functional with data persistence, working interactions, and polished UX.
+
+#### Completed User Stories — Sprint 2
+
+- [x] **#9 — Login with Validation** — Email validation for `@bison.howard.edu`, loading spinner during authentication, error message display, persisted login state across app launches.
+- [x] **#10 — User Profile Persistence** — Edit profile (name, major, graduation year) with data saved to UserDefaults, changes persist across sessions.
+- [x] **#11 — Saved Events Logic** — Heart/save events with haptic feedback + scale animation, saved events persist via AppState, dedicated Saved Events list (accessible from Profile) with swipe-to-unsave.
+- [x] **#12 — Dining API Connector** — Mock dining service protocol (swappable with a real API), menus change by meal period (Breakfast / Lunch / Dinner), pull-to-refresh, loading states, meal period indicator.
+- [x] **#13 — Event Detail View** — Full-screen detail with hero color banner, category badge, event description, date/time/location details, "Save Event" button with haptic feedback, share sheet.
+- [x] **#14 — Class Schedule CRUD** — Full schedule management: add, edit, and delete classes. Day-of-week grouping, swipe-to-delete, time pickers, validation, data persistence.
+- [x] **#15 — Push Notification Service** — Local notification system using `UNUserNotificationCenter`, class reminders (15 min before), event reminders for saved events, notification preferences UI with system settings link.
+- [x] **#16 — Bison Safe Logic** — Full emergency screen with pulsing SOS animation, real phone call links (Campus Police, DC 911, Health Center, Counseling), share GPS location via share sheet, safety tips section.
+- [x] **#17 — Dark Mode Feature** — System-adaptive theme colors, dark mode toggle in Profile settings, persisted preference, all views use adaptive backgrounds.
+
+#### Architecture Improvements
+- **AppState** — Centralized `@Observable` state manager with `UserDefaults` persistence for user profile, saved events, class schedule, and preferences.
+- **DiningService** — Protocol-based service layer (`DiningServiceProtocol`) with swappable mock/live implementations.
+- **NotificationService** — Singleton service for scheduling and managing local notifications.
+
+#### New & Updated Files
+
+```
+howardsync/howardsync/
+├── AppState.swift              (NEW — Central state manager with persistence)
+├── ContentView.swift           (UPDATED — AppState, dark mode, notification perms)
+├── howardsyncApp.swift         (App entry point)
+├── Theme.swift                 (UPDATED — Adaptive colors for dark mode)
+├── Models/
+│   ├── User.swift              (User data model — Codable)
+│   ├── ClassSchedule.swift     (UPDATED — Codable, stable IDs, CRUD support)
+│   ├── CampusEvent.swift       (UPDATED — Descriptions, stable IDs)
+│   ├── DiningHall.swift        (UPDATED — Meal period support)
+│   └── CampusBuilding.swift    (Building model with coordinates)
+├── Services/
+│   ├── DiningService.swift     (NEW — Protocol + mock dining API)
+│   └── NotificationService.swift (NEW — Local notification manager)
+└── Views/
+    ├── LoginView.swift         (UPDATED — Validation, loading, error states)
+    ├── HomeView.swift          (UPDATED — AppState, BisonSafe sheet)
+    ├── MapView.swift           (Campus map with MapKit)
+    ├── FeedView.swift          (UPDATED — Persisted saves, detail navigation)
+    ├── EventDetailView.swift   (NEW — Full event detail with share)
+    ├── SavedEventsView.swift   (NEW — Saved events list)
+    ├── ScheduleView.swift      (NEW — Schedule management)
+    ├── AddClassView.swift      (NEW — Add/edit class form)
+    ├── BisonSafeView.swift     (NEW — Emergency services)
+    ├── DiningView.swift        (UPDATED — Service layer, loading, refresh)
+    ├── ProfileView.swift       (UPDATED — Edit profile, dark mode, all menus)
+    └── MainTabView.swift       (UPDATED — AppState, NavigationStack)
+```
+
+---
+
+### 📽 Demo Day
+
+#### Demo Video
+
+> **TODO:** Add your 2-4 minute demo video link below after recording.
+
+<div>
+    <a href="YOUR_YOUTUBE_OR_VIMEO_LINK_HERE">
+        <img src="assets/wireframes/prototype/first_sprint.gif" width="250" alt="Demo Video"/>
+    </a>
+</div>
+
+<!-- Replace the link above with your actual YouTube/Vimeo URL -->
+<!-- Example: https://www.youtube.com/watch?v=YOUR_VIDEO_ID -->

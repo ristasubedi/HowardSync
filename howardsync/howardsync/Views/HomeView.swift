@@ -8,10 +8,7 @@
 import SwiftUI
 
 struct HomeView: View {
-    let user: User
-    let nextClass: ClassSchedule
-    let events: [CampusEvent]
-    
+    @State private var appState = AppState.shared
     @State private var showBisonSafe = false
     
     private var greeting: String {
@@ -23,6 +20,10 @@ struct HomeView: View {
         }
     }
     
+    private var nextClass: ClassSchedule? {
+        appState.classSchedule.first
+    }
+    
     var body: some View {
         ScrollView(showsIndicators: false) {
             VStack(alignment: .leading, spacing: 20) {
@@ -32,7 +33,7 @@ struct HomeView: View {
                         .font(.system(size: 28, weight: .bold))
                         .foregroundColor(.primary)
                     
-                    Text(user.name.split(separator: " ").first.map(String.init) ?? user.name)
+                    Text(appState.currentUser.name.split(separator: " ").first.map(String.init) ?? appState.currentUser.name)
                         .font(.system(size: 22, weight: .regular))
                         .foregroundColor(.secondary)
                 }
@@ -40,7 +41,9 @@ struct HomeView: View {
                 .padding(.top, 8)
                 
                 // Next Class Card
-                nextClassCard
+                if let nextClass = nextClass {
+                    nextClassCard(nextClass)
+                }
                 
                 // Bison Safe
                 bisonSafeCard
@@ -54,19 +57,15 @@ struct HomeView: View {
                 Spacer(minLength: 100)
             }
         }
-        .background(Color(UIColor.systemGroupedBackground))
-        .alert("Bison Safe", isPresented: $showBisonSafe) {
-            Button("Call Campus Police", role: .destructive) {}
-            Button("Share Location", role: .none) {}
-            Button("Cancel", role: .cancel) {}
-        } message: {
-            Text("Emergency services and safety features")
+        .background(HUTheme.groupedBackground)
+        .sheet(isPresented: $showBisonSafe) {
+            BisonSafeView()
         }
     }
     
     // MARK: - Next Class Card
     
-    private var nextClassCard: some View {
+    private func nextClassCard(_ classItem: ClassSchedule) -> some View {
         VStack(alignment: .leading, spacing: 10) {
             Text("NEXT CLASS")
                 .font(HUTheme.smallCaptionFont)
@@ -75,19 +74,19 @@ struct HomeView: View {
             
             HStack {
                 VStack(alignment: .leading, spacing: 6) {
-                    Text(nextClass.courseCode)
+                    Text(classItem.courseCode)
                         .font(.system(size: 24, weight: .bold))
                         .foregroundColor(.white)
                     
                     HStack(spacing: 6) {
                         Image(systemName: "clock")
                             .font(.system(size: 13))
-                        Text(nextClass.timeString)
+                        Text(classItem.timeString)
                             .font(HUTheme.captionFont)
                     }
                     .foregroundColor(.white.opacity(0.85))
                     
-                    Text(nextClass.locationString)
+                    Text(classItem.locationString)
                         .font(.system(size: 14))
                         .foregroundColor(.white.opacity(0.85))
                 }
@@ -233,7 +232,7 @@ struct HomeView: View {
                     .font(.system(size: 14, weight: .semibold))
             }
             
-            let todayEvents = events.filter { $0.isToday }.prefix(2)
+            let todayEvents = CampusEvent.sampleEvents.filter { $0.isToday }.prefix(2)
             ForEach(Array(todayEvents)) { event in
                 HStack(spacing: 14) {
                     RoundedRectangle(cornerRadius: 10)
@@ -271,9 +270,5 @@ struct HomeView: View {
 }
 
 #Preview {
-    HomeView(
-        user: .sample,
-        nextClass: ClassSchedule.sampleSchedule[0],
-        events: CampusEvent.sampleEvents
-    )
+    HomeView()
 }
